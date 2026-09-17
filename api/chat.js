@@ -39,6 +39,10 @@ export default async function handler(req, res) {
     });
 
     const data = await anthropicResponse.json();
+    if (!anthropicResponse.ok) {
+      // On note l'erreur précise dans les logs Vercel pour pouvoir la lire
+      console.error('Erreur retournée par l\'API Anthropic :', JSON.stringify(data));
+    }
     res.status(200).json(data);
   } catch (err) {
     console.error('Erreur API Claude:', err);
